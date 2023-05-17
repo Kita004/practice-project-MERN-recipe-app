@@ -4,11 +4,13 @@ import { HomePage } from "./pages/HomePage";
 import { AuthPage } from "./pages/AuthPage";
 import { RecipeFormPage } from "./pages/RecipeFormPage";
 import { RecipeList } from "./pages/RecipeList";
+import { Navbar } from "./components/Navbar";
 
 function App() {
     return (
         <div className="App">
             <Router>
+                <Navbar />
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/auth" element={<AuthPage />} />

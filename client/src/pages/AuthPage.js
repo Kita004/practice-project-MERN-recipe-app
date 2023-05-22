@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 export const AuthPage = () => {
     return (
@@ -28,9 +29,24 @@ const Register = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        try {
+            await axios.post("http://localhost:3001/auth/register", {
+                username,
+                password,
+            });
+            alert("Registration Completed! Please Login..");
+        } catch (err) {
+            console.info("ERROR: ", err);
+        }
+    };
+
     return (
         <Form
             label={"Register"}
+            handleSubmit={handleSubmit}
             username={username}
             setUsername={setUsername}
             password={password}
@@ -39,16 +55,23 @@ const Register = () => {
     );
 };
 
-const Form = ({ label, username, setUsername, password, setPassword }) => {
+const Form = ({
+    label,
+    handleSubmit,
+    username,
+    setUsername,
+    password,
+    setPassword,
+}) => {
     return (
         <div className="auth-container">
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h2>{label}</h2>
                 <div className="form-group">
                     <label htmlFor="username">Username:</label>
                     <input
                         type="text"
-                        id="username"
+                        id={"username" + label}
                         value={username}
                         onChange={(event) => setUsername(event.target.value)}
                     />
@@ -57,7 +80,7 @@ const Form = ({ label, username, setUsername, password, setPassword }) => {
                     <label htmlFor="password">Password:</label>
                     <input
                         type="password"
-                        id="password"
+                        id={"password" + label}
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
                     />

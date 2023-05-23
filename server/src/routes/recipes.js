@@ -14,13 +14,13 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.post("/", async (req, res) => {
+router.post("/create", async (req, res) => {
     const recipe = new RecipeModel(req.body);
     try {
         const response = await recipe.save();
         res.json(response);
     } catch (err) {
-        return res.json(err);
+        return res.json("ERROR when Creating Recipe: ", err);
     }
 });
 
